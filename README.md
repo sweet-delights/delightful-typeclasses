@@ -3,7 +3,7 @@
 
 `delightful-typeclasses` is Scala a library containing utility typeclasses.
 
-This library is built for Scala 2.12.12 and 2.13.3
+This library is built for Scala 2.11.12, 2.12.12 and 2.13.3
 
 ### SBT
 ```scala
