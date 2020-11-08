@@ -33,7 +33,7 @@ object Default {
 
   lazy val defaultString = ""
 
-  lazy val defaultChar = 'a'
+  lazy val defaultChar = '\u0000'
 
   lazy val defaultDouble = 0.0d
 
@@ -49,25 +49,25 @@ object Default {
 
   lazy val defaultBoolean = false
 
-  lazy val defaultLocalDate = LocalDate.parse("1970-01-01")
+  lazy val defaultLocalDate = LocalDate.ofEpochDay(0)
 
-  lazy val defaultLocalTime = LocalTime.parse("00:00:00.000")
+  lazy val defaultLocalTime = LocalTime.ofSecondOfDay(0)
 
   lazy val defaultLocalDateTime = LocalDateTime.of(defaultLocalDate, defaultLocalTime)
 
-  lazy val defaultZonedDateTime = ZonedDateTime.of(defaultLocalDate, defaultLocalTime, defaultZoneOffset)
-
-  lazy val defaultZoneId = ZoneId.of("GMT")
-
   lazy val defaultZoneOffset = ZoneOffset.UTC
+
+  lazy val defaultZoneId: ZoneId = defaultZoneOffset
+
+  lazy val defaultZonedDateTime = ZonedDateTime.of(defaultLocalDate, defaultLocalTime, defaultZoneId)
 
   lazy val defaultClass = classOf[Any]
 
   implicit lazy val stringTypeclass: Default[String] = create(defaultString)
 
-  implicit def optionTypeclass[T](implicit instance: Default[T]): Default[Option[T]] = create(Some(instance.get))
+  implicit def optionTypeclass[T](implicit instance: Default[T]): Default[Option[T]] = create(None)
 
-  implicit def listTypeclass[T](implicit instance: Default[T]): Default[List[T]] = create(List(instance.get))
+  implicit def listTypeclass[T](implicit instance: Default[T]): Default[List[T]] = create(Nil)
 
   implicit lazy val charTypeclass: Default[Char] = create(defaultChar)
 

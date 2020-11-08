@@ -24,7 +24,7 @@ class DefaultSpec extends Specification {
     opt: Option[Int],
     str: String,
     double: Double,
-    more: List[Bar]
+    bar: Bar
   )
 
   case class Bar(
@@ -34,12 +34,10 @@ class DefaultSpec extends Specification {
   "Default[T]" should {
     "create a default value of T" in {
       val expected = Foo(
-        opt = Some(Default.defaultInt),
+        opt = None,
         str = Default.defaultString,
         double = Default.defaultDouble,
-        more = List(
-          Bar(list = List(Default.defaultLocalDateTime))
-        )
+        bar = Bar(list = Nil)
       )
       Default[Foo] mustEqual expected
     }
