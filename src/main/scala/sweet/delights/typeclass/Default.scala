@@ -14,7 +14,22 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package sweet.delights.typeclass
 
-import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneId, ZoneOffset, ZonedDateTime}
+import java.time.{
+  Duration,
+  Instant,
+  LocalDate,
+  LocalDateTime,
+  LocalTime,
+  MonthDay,
+  OffsetDateTime,
+  OffsetTime,
+  Period,
+  Year,
+  YearMonth,
+  ZoneId,
+  ZoneOffset,
+  ZonedDateTime
+}
 
 import shapeless.{:+:, ::, CNil, Coproduct, Generic, HList, HNil, Lazy}
 
@@ -49,15 +64,31 @@ object Default {
 
   lazy val defaultBoolean = false
 
+  lazy val defaultDuration = Duration.ZERO
+
+  lazy val defaultInstant = Instant.EPOCH
+
   lazy val defaultLocalDate = LocalDate.ofEpochDay(0)
 
   lazy val defaultLocalTime = LocalTime.ofSecondOfDay(0)
 
   lazy val defaultLocalDateTime = LocalDateTime.of(defaultLocalDate, defaultLocalTime)
 
+  lazy val defaultMonthDay = MonthDay.of(defaultLocalDate.getMonthValue, defaultLocalDate.getDayOfMonth)
+
   lazy val defaultZoneOffset = ZoneOffset.UTC
 
   lazy val defaultZoneId: ZoneId = defaultZoneOffset
+
+  lazy val defaultOffsetDateTime = OffsetDateTime.of(defaultLocalDateTime, defaultZoneOffset)
+
+  lazy val defaultOffsetTime = OffsetTime.of(defaultLocalTime, defaultZoneOffset)
+
+  lazy val defaultPeriod = Period.ZERO
+
+  lazy val defaultYear = Year.of(defaultLocalDate.getYear)
+
+  lazy val defaultYearMonth = YearMonth.of(defaultLocalDate.getYear, defaultLocalDate.getMonth)
 
   lazy val defaultZonedDateTime = ZonedDateTime.of(defaultLocalDate, defaultLocalTime, defaultZoneId)
 
@@ -85,17 +116,35 @@ object Default {
 
   implicit lazy val booleanTypeclass: Default[Boolean] = create(defaultBoolean)
 
+  implicit lazy val durationTypeclass: Default[Duration] = create(defaultDuration)
+
+  implicit lazy val instantTypeclass: Default[Instant] = create(defaultInstant)
+
   implicit lazy val localDateTypeclass: Default[LocalDate] = create(defaultLocalDate)
 
   implicit lazy val localTimeTypeclass: Default[LocalTime] = create(defaultLocalTime)
 
   implicit lazy val localDateTimeTypeclass: Default[LocalDateTime] = create(defaultLocalDateTime)
 
-  implicit lazy val zonedDateTimeTypeclass: Default[ZonedDateTime] = create(defaultZonedDateTime)
+  implicit lazy val monthDayTypeclass: Default[MonthDay] = create(defaultMonthDay)
+
+  implicit lazy val zoneOffsetTypeclass: Default[ZoneOffset] = create(defaultZoneOffset)
 
   implicit lazy val zoneIdTypeclass: Default[ZoneId] = create(defaultZoneId)
 
-  implicit lazy val zoneOffsetTypeclass: Default[ZoneOffset] = create(defaultZoneOffset)
+  implicit lazy val offsetDateTimeTypeclass: Default[OffsetDateTime] = create(defaultOffsetDateTime)
+
+  implicit lazy val offsetTimeTypeclass: Default[OffsetTime] = create(defaultOffsetTime)
+
+  implicit lazy val periodTypeclass: Default[Period] = create(defaultPeriod)
+
+  implicit lazy val yearTypeclass: Default[Year] = create(defaultYear)
+
+  implicit lazy val yearMonthTypeclass: Default[YearMonth] = create(defaultYearMonth)
+
+  implicit lazy val zonedDateTimeTypeclass: Default[ZonedDateTime] = create(defaultZonedDateTime)
+
+  implicit lazy val monthDayDefault: Default[MonthDay] = create(defaultMonthDay)
 
   implicit lazy val classTypeclass: Default[Class[_]] = create(defaultClass)
 
