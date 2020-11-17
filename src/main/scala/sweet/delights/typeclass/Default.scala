@@ -144,8 +144,6 @@ object Default {
 
   implicit lazy val zonedDateTimeTypeclass: Default[ZonedDateTime] = create(defaultZonedDateTime)
 
-  implicit lazy val monthDayDefault: Default[MonthDay] = create(defaultMonthDay)
-
   implicit lazy val classTypeclass: Default[Class[_]] = create(defaultClass)
 
   implicit lazy val cnilTypeclass: Default[CNil] = create(???)
