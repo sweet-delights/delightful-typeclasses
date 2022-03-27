@@ -20,7 +20,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.15", "2.13.8")
 checksums in update := Nil
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
-  "com.chuusai"    %% "shapeless"    % "2.3.8",
+  "com.chuusai"    %% "shapeless"    % "2.3.9",
   "org.specs2"     %% "specs2-core"  % "4.5.1" % "test"
 )
 scalacOptions ++= Seq(
