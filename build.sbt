@@ -15,26 +15,48 @@ developers := List(
     url = url("https://github.com/pgrandjean")
   )
 )
-scalaVersion := "2.12.15"
-crossScalaVersions := Seq("2.11.12", "2.12.15", "2.13.8")
-checksums in update := Nil
-libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
-  "com.chuusai"    %% "shapeless"    % "2.3.8",
-  "org.specs2"     %% "specs2-core"  % "4.5.1" % "test"
-)
-scalacOptions ++= Seq(
-  "-deprecation",
-  "-target:jvm-1.8",
-  "-feature"
-)
-javacOptions in Compile ++= Seq(
+scalaVersion := "3.1.1"
+crossScalaVersions := Seq("2.12.12", "2.13.3", "3.1.1")
+update / checksums := Nil
+libraryDependencies ++= {
+  scalaBinaryVersion.value match {
+    case "3" =>
+      Seq(
+        "org.typelevel" %% "shapeless3-deriving" % "3.0.4",
+        "org.specs2"    %% "specs2-core"         % "4.15.0" % "test"
+      )
+    case _ =>
+      Seq(
+        "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
+        "com.chuusai"    %% "shapeless"    % "2.3.8",
+        "org.specs2"     %% "specs2-core"  % "4.15.0" % "test"
+      )
+  }
+}
+scalacOptions ++= {
+  scalaBinaryVersion.value match {
+    case "3" =>
+      Seq(
+        "-deprecation",
+        "-Xtarget",
+        "8",
+        "-feature"
+      )
+    case _ =>
+      Seq(
+        "-deprecation",
+        "-target:jvm-1.8",
+        "-feature"
+      )
+  }
+}
+Compile / javacOptions ++= Seq(
   "-source",
   "1.8",
   "-target",
   "1.8"
 )
-scalafmtOnCompile in ThisBuild := true
+ThisBuild / scalafmtOnCompile := true
 publishMavenStyle := true
 publishTo := Some {
   val nexus = "https://oss.sonatype.org/"
@@ -61,7 +83,7 @@ releaseVersion := { ver =>
 releaseNextVersion := { ver =>
   Version(ver).map(_.withoutQualifier.bump.string).getOrElse(versionFormatError(ver)) + "-SNAPSHOT"
 }
-releaseCommitMessage := s"[sbt-release] setting version to ${(version in ThisBuild).value}"
+releaseCommitMessage := s"[sbt-release] setting version to ${(ThisBuild / version).value}"
 bugfixRegexes := List(s"${Pattern.quote("[patch]")}.*").map(_.r)
 minorRegexes := List(s"${Pattern.quote("[minor]")}.*").map(_.r)
 majorRegexes := List(s"${Pattern.quote("[major]")}.*").map(_.r)

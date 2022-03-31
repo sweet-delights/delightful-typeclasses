@@ -15,7 +15,6 @@
 package sweet.delights.typeclass
 
 import java.time.LocalDateTime
-
 import org.specs2.mutable.Specification
 
 class DefaultSpec extends Specification {

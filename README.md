@@ -3,7 +3,7 @@
 
 `delightful-typeclasses` is Scala a library containing utility typeclasses.
 
-This library is built for Scala 2.11, 2.12 and 2.13
+This library is built for Scala 2.12.12, 2.13.3 and 3.1.1
 
 ### SBT
 ```scala
@@ -50,7 +50,7 @@ case class Bar(
 *Step 2*: instantiate!
 
 ```scala
-import sweet.delights.typeclass.Default._
+
 
 val default = Default[Foo]
 println(default)
