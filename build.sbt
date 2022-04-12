@@ -15,8 +15,8 @@ developers := List(
     url = url("https://github.com/pgrandjean")
   )
 )
-scalaVersion := "3.1.1"
-crossScalaVersions := Seq("2.12.12", "2.13.3", "3.1.1")
+scalaVersion := "3.1.2"
+crossScalaVersions := Seq("2.12.12", "2.13.3", "3.1.2")
 update / checksums := Nil
 libraryDependencies ++= {
   scalaBinaryVersion.value match {
