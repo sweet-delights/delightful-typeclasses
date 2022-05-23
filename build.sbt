@@ -1,6 +1,10 @@
 import java.util.regex.Pattern
 import sbt.Keys.scalacOptions
 
+lazy val scala2_12 = "2.12.15"
+lazy val scala2_13 = "2.13.8"
+lazy val scala3 = "3.1.2"
+
 name := "delightful-typeclasses"
 organization := "org.sweet-delights"
 homepage := Option(url("https://github.com/sweet-delights/delightful-typeclasses"))
@@ -15,15 +19,14 @@ developers := List(
     url = url("https://github.com/pgrandjean")
   )
 )
-scalaVersion := "3.1.2"
-crossScalaVersions := Seq("2.12.12", "2.13.3", "3.1.2")
+scalaVersion := scala3
+crossScalaVersions := Seq(scala2_12, scala2_13, scala3)
 update / checksums := Nil
 libraryDependencies ++= {
   scalaBinaryVersion.value match {
     case "3" =>
       Seq(
-        "org.typelevel" %% "shapeless3-deriving" % "3.0.4",
-        "org.specs2"    %% "specs2-core"         % "4.15.0" % "test"
+        "org.specs2" %% "specs2-core" % "4.15.0" % "test"
       )
     case _ =>
       Seq(

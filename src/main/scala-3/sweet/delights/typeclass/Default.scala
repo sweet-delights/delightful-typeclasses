@@ -14,24 +14,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package sweet.delights.typeclass
 
-import java.time.{
-  Duration,
-  Instant,
-  LocalDate,
-  LocalDateTime,
-  LocalTime,
-  MonthDay,
-  OffsetDateTime,
-  OffsetTime,
-  Period,
-  Year,
-  YearMonth,
-  ZoneId,
-  ZoneOffset,
-  ZonedDateTime
-}
+import java.time.{Duration, Instant, LocalDate, LocalDateTime, LocalTime, MonthDay, OffsetDateTime, OffsetTime, Period, Year, YearMonth, ZoneId, ZoneOffset, ZonedDateTime}
 
-import shapeless3.deriving.*
+import scala.compiletime.{erasedValue, summonInline}
+import scala.deriving.*
 
 /**
   * Default[T] is a typeclass that constructs a default value for `T`.
@@ -169,10 +155,29 @@ object Default {
   given zonedDateTimeTypeclass: Default[ZonedDateTime] with
     def get: ZonedDateTime = defaultZonedDateTime
 
-  given defaultGen[T](using inst: K0.ProductInstances[Default, T]): Default[T] with
-    def get: T = inst.construct([t] => (mt: Default[t]) => mt.get)
+  inline private def summonAll[T <: Tuple]: List[Default[?]] =
+    inline erasedValue[T] match
+      case _: EmptyTuple => Nil
+      case _: (t *: ts)  => summonInline[Default[t]] :: summonAll[ts]
 
-  inline def derived[T](using gen: K0.ProductGeneric[T]): Default[T] = defaultGen
+  private def deriveSum[T](s: Mirror.SumOf[T], elems: List[Default[?]]): Default[T] = ???
 
-  def apply[T](using inst: Default[T]): T = inst.get
+  private def deriveProduct[T](p: Mirror.ProductOf[T], elems: List[Default[?]]): Default[T] =
+    def toTuple(elems: List[Default[?]]): Tuple = elems match
+      case Nil => EmptyTuple
+      case d :: ds => d.get *: toTuple(ds)
+
+    new Default[T] {
+      def get: T =
+        val tuple = toTuple(elems)
+        p.fromProduct(tuple)
+    }
+
+  inline given derived[T](using m: Mirror.Of[T]): Default[T] =
+    val elems = summonAll[m.MirroredElemTypes]
+    inline m match
+      case s: Mirror.SumOf[T] => deriveSum[T](s, elems)
+      case p: Mirror.ProductOf[T] => deriveProduct[T](p, elems)
+
+  def apply[T](using default: Default[T]): T = default.get
 }

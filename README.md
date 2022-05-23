@@ -3,11 +3,11 @@
 
 `delightful-typeclasses` is Scala a library containing utility typeclasses.
 
-This library is built for Scala 2.12.12, 2.13.3 and 3.1.1
+This library is built for Scala 2.12.15, 2.13.8 and 3.1.2
 
 ### SBT
 ```scala
-libraryDependencies += "org.sweet-delights" %% "delightful-typeclasses" % "0.1.1"
+libraryDependencies += "org.sweet-delights" %% "delightful-typeclasses" % "0.2.0"
 ```
 
 ### Maven
@@ -15,7 +15,7 @@ libraryDependencies += "org.sweet-delights" %% "delightful-typeclasses" % "0.1.1
 <dependency>
   <groupId>org.sweet-delights</groupId>
   <artifactId>delightful-typeclasses_2.12</artifactId>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
@@ -68,3 +68,4 @@ println(default)
 
 - the [`shapeless`](https://github.com/milessabin/shapeless) library
 - the [The Type Astronaut's Guide to Shapeless](https://underscore.io/books/shapeless-guide/) book
+- the [Scala 3](https://docs.scala-lang.org/scala3/reference/contextual/derivation.html) documentation
