@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/sweet-delights/delightful-typeclasses.svg?branch=master)](https://travis-ci.com/sweet-delights/delightful-typeclasses)
+[![Build status](https://github.com/sweet-delights/delightful-cron/actions/workflows/scala.yml/badge.svg)](https://github.com/sweet-delights/delightful-cron/actions/workflows/scala.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/org.sweet-delights/delightful-typeclasses_2.13.svg)](https://maven-badges.herokuapp.com/maven-central/org.sweet-delights/delightful-typeclasses_2.13)
 
 `delightful-typeclasses` is Scala a library containing utility typeclasses.
