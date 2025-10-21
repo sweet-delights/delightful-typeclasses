@@ -26,13 +26,13 @@ libraryDependencies ++= {
   scalaBinaryVersion.value match {
     case "3" =>
       Seq(
-        "org.specs2" %% "specs2-core" % "4.22.0" % "test"
+        "org.specs2" %% "specs2-core" % "4.23.0" % "test"
       )
     case _ =>
       Seq(
         "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
         "com.chuusai"    %% "shapeless"    % "2.3.13",
-        "org.specs2"     %% "specs2-core"  % "4.22.0" % "test"
+        "org.specs2"     %% "specs2-core"  % "4.23.0" % "test"
       )
   }
 }
